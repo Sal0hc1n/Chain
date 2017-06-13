@@ -1,8 +1,10 @@
 '''
 pyJson.py
 @author: Nicholas Sollazzo
-@version: 1.0
-@date: 8/05/17
+@mail: sollsharp@gmail.com
+@version: 0.2
+@date: 13/06/17
+@status: WRK
 '''
 
 import json
@@ -29,7 +31,7 @@ class pyJson(object):
     def set(self, args, path=None):
         if path is None:
             with open(self.path, 'w') as f:
-                f.write(json.dump(args, f))
+                json.dump(args, f)
         else:
             with open(path, 'w') as f:
                 f.write(json.dump(args, f))
@@ -64,7 +66,7 @@ class pyJson(object):
         # rename the temporary file onto the original file
         os.rename(new_path, self.path)
 
-    def add(self, key, args):
+    def append(self, key, args):
         with open(self.path, 'r') as f:
             json_data = json.load(f)
             json_elements = json_data[key]
