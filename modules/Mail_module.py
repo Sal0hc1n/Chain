@@ -2,7 +2,7 @@
 Mail_module.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 1.2
+@version: 0.2
 @date: 11/06/17
 @status: TBT
 '''
@@ -11,15 +11,17 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from module import Module
-from pyJson import pyJson
+from modules.base.module import Module
+from utils.pyJson import pyJson
 
 
 class Mail(Module):
     """docstring for Mail."""
 
-    def __init__(self, path):
-        self.jsn = pyJson(path)
+    def __init__(self):
+        self.path = 'data/modules_data/mail.json'
+        self.jsn = pyJson(self.path)
+        self.jsn.set({'module_name': 'Mail_module'})
         self.cond = False
         self.act = True
 
