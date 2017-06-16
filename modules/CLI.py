@@ -96,6 +96,28 @@ def choose_condition(module_chosen):
 
     return validator(limit, input_text, range_err, value_err)
 
+def show_actions(id_module):
+    id_module = (id_module,)
+    query = '''
+        SELECT *
+        FROM action
+        WHERE id_module=?
+    '''
+    result = DB.execute_check_fetch_dict(query, id_module)
+    print(pd.DataFrame(result, columns=[
+          'id_action', 'action_name']))
+    limit = valid(result,'id_action')
+    return limit
+
+
+def choose_action(module_chosen):
+    limit = show_actions(module_chosen)
+    input_text = 'Action id: '
+    range_err = 'The action id must be in the list'
+    value_err = 'The action number must be an integer'
+
+    return validator(limit, input_text, range_err, value_err)
+
 def set_condition(id_module, id_condition):
     id_module = (id_module,)
     query = '''
@@ -120,15 +142,44 @@ def set_condition(id_module, id_condition):
     # method exec
     return getattr(module,condition[0]['condition_name'])()
 
+def set_action(id_module, id_action):
+    id_module = (id_module,)
+    query = '''
+        SELECT module_name
+        FROM Module
+        WHERE id_module=?
+    '''
+
+    result = DB.execute_check_fetch_dict(query, id_module)
+    module = module_switcher(result[0]['module_name'].upper())
+
+    id_action = (id_action,)
+
+    query = '''
+        SELECT action_name
+        FROM action
+        WHERE id_action=?
+    '''
+
+    condition = DB.execute_check_fetch_dict(query, id_action)
+
+    # method exec
+    return getattr(module,condition[0]['action_name'])()
 
 
 def CLI():
+    print('=+=+= IF =+=+=')
     module_chosen = choose_module('condition')
-    print('module_chosen:', module_chosen)
+    print('=*=*= Condition =*=*=')
     condition_chosen = choose_condition(module_chosen)
     result = set_condition(module_chosen, condition_chosen)
-    print('result',result)
+    print('=+=+= THEN =+=+=')
+    module_chosen = choose_module('action')
+    print('=*=*= Action =*=*=')
+    action_chosen = choose_action(module_chosen)
+
     if result:
-        module_chosen = choose_module('action')
+        print('=/=/= EXEC Action =\=\=')
+        result = set_action(module_chosen, action_chosen)
     else:
-        pass
+        print('=+=+= ELSE =+=+=')
