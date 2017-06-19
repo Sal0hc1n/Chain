@@ -170,16 +170,14 @@ def set_action(id_module, id_action):
 def CLI():
     print('=+=+= IF =+=+=')
     module_chosen = choose_module('condition')
+
     print('=*=*= Condition =*=*=')
     condition_chosen = choose_condition(module_chosen)
-    result = set_condition(module_chosen, condition_chosen)
+    result_condition = set_condition(module_chosen, condition_chosen)
+
     print('=+=+= THEN =+=+=')
     module_chosen = choose_module('action')
+
     print('=*=*= Action =*=*=')
     action_chosen = choose_action(module_chosen)
-
-    if result:
-        print('=/=/= EXEC Action =\=\=')
-        result = set_action(module_chosen, action_chosen)
-    else:
-        print('=+=+= ELSE =+=+=')
+    result_action = set_action(module_chosen, action_chosen)
