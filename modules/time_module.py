@@ -33,10 +33,10 @@ class Time(object):
         self.flag = chain
 
     def now(self):
-        return datetime.datetime.now()
+        return [False, str(datetime.datetime.now())[:-7]]
 
     def today(self):
-        return datetime.date.today()
+        return [False, str(datetime.date.today())]
 
     def custom_datetime(self):
         print('=== CUSTOM DATETIME ===')
@@ -58,7 +58,7 @@ class Time(object):
             minutes = 00
             seconds = 00
 
-        return datetime.datetime(year, month, day, hour, minutes, seconds)
+        return [True, str(datetime.datetime(year, month, day, hour, minutes, seconds))]
 
     def get_weekday(self):
         print('=== GET WEEKDAY ===')
@@ -69,11 +69,11 @@ class Time(object):
         # tmp = int(input('0 today\n1 custom\n> '))
         if tmp == 0:
             print('=== GET WEEKDAY - TODAY ===')
-            return datetime.datetime.today().weekday()
+            return [True, datetime.datetime.today().weekday()] # XXX
         else:
             print('=== GET WEEKDAY - CUSTOM ===')
             custom = self.custom_datetime()
-            return custom.weekday()
+            return [True, custom.weekday()] # XXX
 
 
     def delay(self, seconds):
