@@ -50,7 +50,6 @@ def CLI():
         os.system('clear')
         print('=*=*= Action =*=*=')
         action_chosen = choose_action(module_chosen)
-        print('action_chosen:', action_chosen)
         par.append(action_chosen)
         result_action = set_action(module_chosen, action_chosen)
         par.append(result_action)
