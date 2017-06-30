@@ -2,10 +2,11 @@
 chain.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 1.0
-@date: 28/06/17
+@version: 1.1
+@date: 30/06/17
 @status: WRK
 '''
+
 # import sys
 # sys.path.append("..")
 import pandas as pd
@@ -13,7 +14,6 @@ import json
 import os.path
 
 from modules.utils.pySqlite import pySqlite3
-# import modules.utils.module_switcher as module_switcher
 
 import modules.mail_module
 import modules.time_module
@@ -29,45 +29,118 @@ class System(object):
     def user_input(self):
         return input('> ')
 
-    def equals(self):
-        print('=== EQUALS ===')
-        module_chosen = choose_module('condition')
-        print('=== EQUALS ARG1 ===')
-        cond = choose_condition(module_chosen)
-        arg1 = set_condition(module_chosen, cond)
-        print('=== EQUALS ARG2 ===')
-        cond = choose_condition(module_chosen)
-        arg2 = set_condition(module_chosen, cond)
-        return [arg1 == arg2, [module_chosen, cond, cond]]
+    def equals(self, args=None):
+        if args is None:
+            print('=== EQUALS ===')
+            module_chosen = choose_module('condition')
+            print('=== EQUALS ARG1 ===')
+            cond1 = choose_condition(module_chosen)
+            arg1 = set_condition(module_chosen, cond1)
+            print('=== EQUALS ARG2 ===')
+            cond2 = choose_condition(module_chosen)
+            arg2 = set_condition(module_chosen, cond2)
+            if arg1[0] is True:
+                return [arg1[1] == arg2, [module_chosen, cond1, cond2, True, arg1[1]]]
+            elif arg2[0] is True:
+                return [arg1 == arg2[1], [module_chosen, cond1, cond2, False, arg2[1]]]
+            else:
+                return [arg1 == arg2, [module_chosen, cond1, cond2, None]]
+        else:
+            if args[3] is True:
+                arg1 = args[4]
+                arg2 = set_condition(args[0], args[2])[1]
+                return arg1 == arg2
+            elif args[3] is False:
+                arg1 = set_condition(args[0], args[1])[1]
+                arg2 = args[4]
+                return arg1 == arg2
+            elif args[3] is None:
+                arg1 = set_condition(args[0], args[1])[1]
+                arg2 = set_condition(args[0], args[2])[1]
+                return arg1 == arg2
 
-    def grater(self):
-        print('=== GRATER ===')
-        module_chosen = choose_module('condition')
-        print('=== GRATER ARG1 ===')
-        cond = choose_condition(module_chosen)
-        arg1 = set_condition(module_chosen, cond)
-        print('=== GRATER ARG2 ===')
-        cond = choose_condition(module_chosen)
-        arg2 = set_condition(module_chosen, cond)
-        return [arg1 > arg2, [module_chosen, cond, cond]]
+    def grater(self, args=None):
+        if args is None:
+            print('=== GRATER ===')
+            module_chosen = choose_module('condition')
+            print('=== GRATER ARG1 ===')
+            cond1 = choose_condition(module_chosen)
+            arg1 = set_condition(module_chosen, cond1)
+            print('=== GRATER ARG2 ===')
+            cond2 = choose_condition(module_chosen)
+            arg2 = set_condition(module_chosen, cond2)
+            if arg1[0] is True:
+                return [arg1[1] > arg2, [module_chosen, cond1, cond2, True, arg1[1]]]
+            elif arg2[0] is True:
+                return [arg1 > arg2[1], [module_chosen, cond1, cond2, False, arg2[1]]]
+            else:
+                return [arg1 > arg2, [module_chosen, cond1, cond2, None]]
+        else:
+            if args[3] is True:
+                arg1 = args[4]
+                arg2 = set_condition(args[0], args[2])[1]
+                return arg1 > arg2
+            elif args[3] is False:
+                arg1 = set_condition(args[0], args[1])[1]
+                arg2 = args[4]
+                return arg1 > arg2
+            elif args[3] is None:
+                arg1 = set_condition(args[0], args[1])[1]
+                arg2 = set_condition(args[0], args[2])[1]
+                return arg1 > arg2
 
     def lower(self):
-        print('=== LOWER ===')
-        module_chosen = choose_module('condition')
-        print('=== LOWER ARG1 ===')
-        cond = choose_condition(module_chosen)
-        arg1 = set_condition(module_chosen, cond)
-        print('=== LOWER ARG2 ===')
-        cond = choose_condition(module_chosen)
-        arg2 = set_condition(module_chosen, cond)
-        return [arg1 < arg2, [module_chosen, cond, cond]]
+        if args is None:
+            print('=== LOWER ===')
+            module_chosen = choose_module('condition')
+            print('=== LOWER ARG1 ===')
+            cond1 = choose_condition(module_chosen)
+            arg1 = set_condition(module_chosen, cond1)
+            print('=== LOWER ARG2 ===')
+            cond2 = choose_condition(module_chosen)
+            arg2 = set_condition(module_chosen, cond2)
+            if arg1[0] is True:
+                return [arg1[1] < arg2, [module_chosen, cond1, cond2, True, arg1[1]]]
+            elif arg2[0] is True:
+                return [arg1 < arg2[1], [module_chosen, cond1, cond2, False, arg2[1]]]
+            else:
+                return [arg1 < arg2, [module_chosen, cond1, cond2, None]]
+        else:
+            if args[3] is True:
+                arg1 = args[4]
+                arg2 = set_condition(args[0], args[2])[1]
+                return arg1 < arg2
+            elif args[3] is False:
+                arg1 = set_condition(args[0], args[1])[1]
+                arg2 = args[4]
+                return arg1 < arg2
+            elif args[3] is None:
+                arg1 = set_condition(args[0], args[1])[1]
+                arg2 = set_condition(args[0], args[2])[1]
+                return arg1 < arg2
 
-    def puts(self):
-        arg = input('> ')
-        return arg
+    def puts(self, args=None):
+        if args is None:
+            arg = input('> ')
+            return arg
+        else:
+            print(args)
+
+    def putz(self): # TODO: print a function result
+        input_text = '0 custom\n1 from module\n> '
+        range_err = 'please, choose 0 or 1'
+        value_err = 'you must choose 0 or 1'
+        tmp = validator(limit, input_text, range_err, value_err)
+        if tmp == 0:
+            arg = input('> ')
+            return arg
+        else:
+            pass
+
+# ====================== CHAIN =======================
 
 # modules
-FLAG = True
+FLAG = False
 MAIL = modules.mail_module.Mail(FLAG)
 TIME = modules.time_module.Time(FLAG)
 SYS = System(FLAG)
@@ -172,7 +245,7 @@ def choose_action(module_chosen):
     # returns the id of the action chosen by the user
     return validator(limit, input_text, range_err, value_err)
 
-def set_condition( id_module, id_condition):
+def set_condition(id_module, id_condition, args=None):
     id_module = (id_module,)
     query = '''
         SELECT module_name
@@ -193,10 +266,14 @@ def set_condition( id_module, id_condition):
 
     condition = DB.execute_check_fetch_dict(query, id_condition)
 
-    # method exec
-    return getattr(module, condition[0]['condition_name'])()
+    if args is None:
+        # method exec
+        return getattr(module, condition[0]['condition_name'])()
+    else:
+        # method exec with parameters
+        return getattr(module, condition[0]['condition_name'])(args)
 
-def set_action(id_module, id_action):
+def set_action(id_module, id_action, args=None):
     id_module = (id_module,)
     query = '''
         SELECT module_name
@@ -217,18 +294,17 @@ def set_action(id_module, id_action):
 
     action = DB.execute_check_fetch_dict(query, id_action)
 
-    # method exec
-    return getattr(module, action[0]['action_name'])()
-
-def check_condition( IF_dict): #TODO: DEV
-    if_id_module = IF_dict['if_id_module']
-    if_id_condition = IF_dict['if_id_condition']
-    condition = IF_dict['condition']
+    if args is None:
+        # method exec
+        return getattr(module, action[0]['action_name'])()
+    else:
+        # method exec with parameters
+        return getattr(module, action[0]['action_name'])(args)
 
 # ====================== MAKE CHAIN =======================
 
 def copy(path):
-    with open('data/chains_data/base/chain.json', 'r') as f:
+    with open('data/chains_data/base/chains_template.json', 'r') as f:
         json_data = json.load(f)
 
     if os.path.isfile(path):
@@ -257,7 +333,7 @@ def edit(path, if_keys, then_keys, args):
 
 def new_chain(path, args):
     if_keys = ('if_id_module', 'if_id_condition', 'condition')
-    then_keys = ('then_id_module', 'then_id_condition', 'action')
+    then_keys = ('then_id_module', 'then_id_action', 'action')
 
     if copy(path):
         edit(path, if_keys, then_keys, args)
