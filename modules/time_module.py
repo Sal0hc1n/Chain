@@ -2,8 +2,8 @@
 Time_module.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 0.3
-@date: 23/06/17
+@version: 1.1
+@date: 01/07/17
 @status: WRK
 '''
 
@@ -37,6 +37,25 @@ class Time(object):
 
     def today(self):
         return [False, str(datetime.date.today())]
+
+    def hour(Self):
+        return [False, str(datetime.datetime.now())[11:-10]]
+
+    def custom_hour(self):
+        print('=== CUSTOM HOUR ===')
+        limit = range(24)
+        input_text = 'Hour: '
+        range_err = 'please, choose a number betweem 0 or 24'
+        value_err = 'you must choose a number'
+        hour = validator(limit, input_text, range_err, value_err)
+
+        limit = range(60)
+        input_text = 'Minutes: '
+        range_err = 'please, choose a number betweem 0 or 59'
+        value_err = 'you must choose a number'
+        minutes = validator(limit, input_text, range_err, value_err)
+
+        return [True, str(datetime.datetime(2016, 12, 15, hour, minutes, 00))][11:]
 
     def custom_datetime(self):
         print('=== CUSTOM DATETIME ===')

@@ -2,8 +2,8 @@
 Mail_module.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 1.0
-@date: 30/06/17
+@version: 1.1
+@date: 01/07/17
 @status: WRK
 @note: html mail not implemented, but possible
 '''
@@ -24,22 +24,22 @@ class Mail(object):
         self.cond = False
         self.act = True
 
-    def send(self, args=None):  # TODO: implement
+    def send(self, args=None):
 
         html_path = None
         placeholder = None # for links
         link = None
+        from_gmail = 'athome.hub01@gmail.com'
+        from_gmail_psw = 'steins;gate'
 
         # body = self.jsn.get('body')
         # html_path = self.jsn.get('html_path')
         # placeholder = self.jsn.get('placeholder')
         # link = self.jsn.get('link')
         if args is not None:
-            from_gmail = args[0]
-            from_gmail_psw = args[1]
-            to_email = args[2]
-            subject = args[3]
-            body = args[4]
+            to_email = args[0]
+            subject = args[1]
+            body = args[2]
 
             # formattazzione messaggio
             mime_msg = MIMEMultipart('alternative')
@@ -77,4 +77,4 @@ class Mail(object):
             subject = input('subject: ')
             body = input('body: ')
 
-            return [from_gmail, from_gmail_psw, to_email, subject, body]
+            return [to_email, subject, body]
