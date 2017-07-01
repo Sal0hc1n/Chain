@@ -30,6 +30,7 @@ def loop(sec=1):
         chain_name = check_condition(conditions)
         if chain_name is not None:
             execute_action(chain_name)
+            print('LOG - ',chain_name,'has been Executed')
         sleep(sec)
         i += 1
     loop()
