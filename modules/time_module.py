@@ -38,8 +38,8 @@ class Time(object):
     def today(self):
         return [False, str(datetime.date.today())]
 
-    def hour(Self):
-        return [False, str(datetime.datetime.now())[11:-10]]
+    def hour(self):
+        return [False, str(datetime.datetime.now())[11:-7]]
 
     def custom_hour(self):
         print('=== CUSTOM HOUR ===')
@@ -55,7 +55,7 @@ class Time(object):
         value_err = 'you must choose a number'
         minutes = validator(limit, input_text, range_err, value_err)
 
-        return [True, str(datetime.datetime(2016, 12, 15, hour, minutes, 00))][11:]
+        return [True, str(datetime.datetime(2016, 12, 15, hour, minutes, 00))[11:]]
 
     def custom_datetime(self):
         print('=== CUSTOM DATETIME ===')
