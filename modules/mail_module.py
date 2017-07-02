@@ -58,6 +58,7 @@ class Mail(object):
 
             # invio mail con link
             s = smtplib.SMTP('smtp.gmail.com:587')
+            s.ehlo()
             s.starttls()
             s.login(from_gmail, from_gmail_psw)
 
@@ -70,9 +71,6 @@ class Mail(object):
 
         else:
             print('=== EMAIL ===')
-            from_gmail = input('gmail sender: ')
-            print ('insert your passwod')
-            from_gmail_psw = getpass.getpass()
             to_email = input('reciver: ')
             subject = input('subject: ')
             body = input('body: ')
